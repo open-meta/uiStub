@@ -1,5 +1,8 @@
 ### uiStub
-### v1.0 - Tom Weishaar - Sep 19, 2017
+### v1.1 - Tom Weishaar - Sep 19, 2017
+
+### v1.1 fixes a security issue
+###    for details, see: https://groups.google.com/forum/?utm_source=digest&utm_medium=email#!topic/shiny-discuss/zxoLK1kKTCw)
 
 ### Simple demo program that "moves" the ui into the server, thereby allowing the use of
 ###    the URL "search" protocol to create multi-page web sites. The advantage is that
@@ -31,13 +34,15 @@ server <- function(input, output, session) {
    ))                                                   #    rest of the page to this output$
 
    # load server code for page specified in URL
+   validFiles = c("home.R", "oldFaithful.R")            # valid files must be hardcoded here
+                                                        #    for security
    fname = isolate(session$clientData$url_search)       # isolate() deals with reactive context
 
    print(paste0("New session, filename: ", fname))      # note this prints for each new URL...
                                                         #    (a new URL gets a new server() function)
    if(nchar(fname)==0) { fname = "?home" }              # blank means home page
    fname = paste0(substr(fname, 2, nchar(fname)), ".R") # remove leading "?", add ".R"
-   if(!file.exists(fname)){                             # does that file exist?
+   if(!fname %in% validFiles){                          # is that one of our files?
       output$pageStub <- renderUI(                      # 404 if no file with that name
          fluidRow(
             column(5,
