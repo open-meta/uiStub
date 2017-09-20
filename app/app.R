@@ -1,8 +1,10 @@
 ### uiStub
-### v1.1 - Tom Weishaar - Sep 19, 2017
+### v1.2 - Tom Weishaar - Sep 2017
 
 ### v1.1 fixes a security issue
 ###    for details, see: https://groups.google.com/forum/?utm_source=digest&utm_medium=email#!topic/shiny-discuss/zxoLK1kKTCw)
+### v1.2 adds some tagList() functions that aren't strictly required here, but make it
+###    much easier to expand this code.
 
 ### Simple demo program that "moves" the ui into the server, thereby allowing the use of
 ###    the URL "search" protocol to create multi-page web sites. The advantage is that
