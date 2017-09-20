@@ -1,6 +1,6 @@
 # home page
 
-output$pageStub <- renderUI(
+output$pageStub <- renderUI(tagList(
    fluidRow(
       column(5,
          HTML("<p>This is the home page of our excellent web site.</p>",
@@ -11,4 +11,4 @@ output$pageStub <- renderUI(
               "error handling for bad URLs.</p>")
       )
    )
-)
+))

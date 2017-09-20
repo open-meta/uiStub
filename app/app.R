@@ -21,16 +21,18 @@ print("uiStub application loaded...")                   # note this prints only 
 server <- function(input, output, session) {
 
    # build menu; same on all pages
-   output$uiStub <- renderUI(fluidPage(                 # a single-output stub ui basically lets you
-      fluidRow(                                         #     move the ui into the server function
-         column(12,
-            HTML("<h3><a href='?home'>Home</a> | ",
-                 "<a href='?oldFaithful'>Old Faithful</a> |",
-                 "<a href='?page3'>Nothing</a>",
-                 "</h3>")
-            )
-         ),
-      uiOutput("pageStub")                              # loaded server code should render the
+   output$uiStub <- renderUI(tagList(                   # a single-output stub ui basically lets you
+      fluidPage(                                        #     move the ui into the server function
+         fluidRow(
+            column(12,
+               HTML("<h3><a href='?home'>Home</a> | ",
+                    "<a href='?oldFaithful'>Old Faithful</a> |",
+                    "<a href='?page3'>Nothing</a>",
+                    "</h3>")
+               )
+            ),
+         uiOutput("pageStub")                              # loaded server code should render the
+      )
    ))                                                   #    rest of the page to this output$
 
    # load server code for page specified in URL
@@ -43,14 +45,14 @@ server <- function(input, output, session) {
    if(nchar(fname)==0) { fname = "?home" }              # blank means home page
    fname = paste0(substr(fname, 2, nchar(fname)), ".R") # remove leading "?", add ".R"
    if(!fname %in% validFiles){                          # is that one of our files?
-      output$pageStub <- renderUI(                      # 404 if no file with that name
+      output$pageStub <- renderUI(tagList(              # 404 if no file with that name
          fluidRow(
             column(5,
                HTML("<h2>404 Not Found Error:</h2><p>That URL doesn't exist. Use the",
                     "menu above to navigate to the page you were looking for.</p>")
             )
          )
-      )
+      ))
       return()                                          # prevents a "file not found" error on
    }                                                    #    the next line after a 404 error
    source(fname, local=TRUE)                            # load and run server code for this page
